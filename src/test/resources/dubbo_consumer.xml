@@ -9,12 +9,12 @@
 
 
     <!--半自动化，使用annotation来注解-->
-    <dubbo:application name="cy_boot_rest_api" />
+    <dubbo:application name="com.threeq" />
     <!-- 使用zookeeper广播注册中心暴露服务地址 -->
-    <dubbo:registry protocol="zookeeper" address="${zk.url}" check="false"/>
+    <dubbo:registry protocol="zookeeper" address="127.0.0.1:2181" check="false"/>
 
     <!-- 扫描注解包路径，多个包用逗号分隔，不填pacakge表示扫描当前ApplicationContext中所有的类 -->
-    <dubbo:annotation package="com.changyi"/>
+    <dubbo:annotation package="com.threeq"/>
 
     <dubbo:consumer proxy="MockProxy" retries="0" timeout="30000" check="false"/>
 
