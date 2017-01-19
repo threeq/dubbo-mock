@@ -1,0 +1,18 @@
+apply plugin: "org.sonarqube"
+
+sonarqube {
+    properties {
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.host.url", "http://ci.vchangyi.com:9000"
+        property "sonar.login", "admin"
+        property "sonar.password", "admin"
+        property "sonar.java.coveragePlugin", "jacoco"
+        property "sonar.jacoco.reportPath", "$buildDir/jacoco"
+    }
+}
+
+//project(":dubbo-mock-core") {
+//    sonarqube {
+//        skipProject = true
+//    }
+//}

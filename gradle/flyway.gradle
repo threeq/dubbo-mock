@@ -1,0 +1,14 @@
+
+apply plugin: "org.flywaydb.flyway"
+
+flyway {
+    url = 'jdbc:mysql://5788c6fc328dc.sh.cdb.myqcloud.com:5616/archcenter?characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull'
+    driver = 'com.mysql.jdbc.Driver'
+    user = 'cdb_outerroot'
+    password = 'changyi@2016'
+    sqlMigrationPrefix = 'V'
+    sqlMigrationSuffix = 'sql'
+    encoding = 'UTF-8'
+    baselineVersion = '1.0'
+    cleanDisabled = true
+}

@@ -1,0 +1,73 @@
+
+buildscript {
+    ext {
+    }
+    repositories {
+        mavenLocal()
+        maven { url "http://115.159.125.225:8081/nexus/content/groups/public" }
+        mavenCentral()
+        jcenter()
+        maven { url "http://repo.spring.io/release" }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    dependencies {
+        classpath(
+                "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.0.1",
+                "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0",
+        )
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.7
+
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
+repositories {
+    mavenLocal()
+    maven { url "http://115.159.125.225:8081/nexus/content/groups/public" }
+    mavenCentral()
+    jcenter()
+    maven { url "http://repo.spring.io/release" }
+}
+
+ext {
+    dubbo_version = "2.8.4"
+    junit_version = "4.12"
+}
+
+dependencies {
+    compile(
+            "com.alibaba:dubbo:${dubbo_version}",
+            "com.github.sgroschupf:zkclient:${zkclient_version}",
+            "org.codehaus.groovy:groovy-all:2.4.6",
+            "org.springframework.boot:spring-boot-starter-web:${springBootVersion}",
+            "org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}",
+            "org.springframework.boot:spring-boot-starter-redis:${springBootVersion}",
+            "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}",
+//            "org.springframework:spring-beans:${spring_version}",
+//            "org.springframework:spring-web:${spring_version}",
+//            "org.springframework:spring-webmvc:${spring_version}",
+//            "org.springframework:spring-context-support:${spring_version}",
+//            "org.springframework:spring-jdbc:${spring_version}"
+    )
+    testCompile(
+            project(":dubbo-mock-core"),
+            "junit:junit:${junit_version}",
+            "org.springframework.boot:spring-boot-starter-test:${springBootVersion}",
+            "com.jayway.jsonpath:json-path:2.2.0",
+            "org.codehaus.groovy:groovy-all:2.4.6",
+            "org.spockframework:spock-core:1.0-groovy-2.4",
+            "org.spockframework:spock-spring:1.0-groovy-2.4",
+            "org.powermock:powermock-module-junit4:1.6.2",
+            "org.powermock:powermock-module-junit4-rule:1.6.2",
+            "org.powermock:powermock-classloading-xstream:1.6.2",
+            "org.powermock:powermock-api-mockito:1.6.2",
+            "org.mockito:mockito-all:1.10.19"
+    )
+}

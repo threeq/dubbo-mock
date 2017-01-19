@@ -1,5 +1,9 @@
 buildscript {
     ext {
+        springBootVersion = '1.4.3.RELEASE'
+        spring_version = "4.2.7.RELEASE"
+        jackson_version = "2.6.5"
+        zkclient_version = "0.1"
     }
     repositories {
         mavenLocal()
@@ -12,39 +16,59 @@ buildscript {
 
     dependencies {
         classpath(
+                "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}",
                 "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.0.1",
                 "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0",
+                "gradle.plugin.com.boxfuse.client:flyway-release:4.0.3",
+                "com.h2database:h2:1.4.191"
         )
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'maven'
+group = 'dobbo-mock'
+version = '1.0'
+description = "畅移java boot框架"
 
-sourceCompatibility = 1.7
+allprojects {
+    // 添加全部工程配置在这里
+    apply plugin: 'java'
 
-[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+    sourceCompatibility = 1.8
 
-repositories {
-    mavenLocal()
-    maven { url "http://115.159.125.225:8081/nexus/content/groups/public" }
-    mavenCentral()
-    jcenter()
-    maven { url "http://repo.spring.io/release" }
+    [compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
+    repositories {
+        mavenLocal()
+        maven { url "http://115.159.125.225:8081/nexus/content/groups/public" }
+        mavenCentral()
+        jcenter()
+        maven { url "http://repo.spring.io/release" }
+    }
 }
 
-ext {
-    dubbo_version = "2.8.4"
-    junit_version = "4.12"
+subprojects {
+    apply from: "$rootDir/gradle/coverage.gradle"
+    apply from: "$rootDir/gradle/flyway.gradle"
+    apply from: "$rootDir/gradle/sonar.gradle"
 }
 
-dependencies {
-    compile(
-            "com.alibaba:dubbo:${dubbo_version}",
-            "junit:junit:${junit_version}",
-            "com.jayway.jsonpath:json-path:2.2.0",
-            "org.codehaus.groovy:groovy-all:2.4.6",
-            "org.spockframework:spock-core:1.0-groovy-2.4",
-            "org.spockframework:spock-spring:1.0-groovy-2.4"
-    )
+/////////////////  共有方法定义   //////////////////////
+/**
+ * 加载db配置文件
+ * @return
+ */
+def loadProperties(propFileList) {
+    Properties p = new Properties()
+    propFileList.each { String file ->
+        def temp = new Properties()
+        new File(file).withInputStream { stream ->
+            temp.load(stream)
+            temp.propertyNames().each { String K ->
+                p.setProperty(K, temp.getProperty(K));
+            }
+        }
+    }
+
+
+    return p
 }

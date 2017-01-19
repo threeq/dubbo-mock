@@ -1,0 +1,5 @@
+
+rootProject.name = "dubbo-mock"
+
+include 'dubbo-mock-core'
+include 'dubbo-mock-demo'
