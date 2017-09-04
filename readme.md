@@ -13,3 +13,9 @@
 ```
 
 如果还需要接触zk依赖,可以将所有的 `check` 选项设置成 `check="false"` 
+
+## 工程说明
+
+1. `dubbo-mock-core` dubbo-mock 核心实现
+2. `dubbo-mock-demo` dubbo-mock 使用实例。demo 中提供了 `spock`、`mockito` 2 个例子
+3. `docker-compose.yml` 开发时所依赖的组件服务: `zookeeper`
