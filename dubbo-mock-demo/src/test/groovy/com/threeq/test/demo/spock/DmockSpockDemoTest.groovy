@@ -9,9 +9,7 @@ import com.alibaba.dubbo.config.annotation.Reference
 import com.threeq.test.TestApplication
 import com.threeq.test.api.Demo
 import com.threeq.test.api.IDemo1
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.web.WebAppConfiguration
 
 @ContextConfiguration(classes = [TestApplication.class])
 class DmockSpockDemoTest extends SpockSpringBaseTest {

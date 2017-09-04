@@ -1,11 +1,10 @@
 package com.threeq.test.demo.spock
 
 import com.threeq.test.dmock.MockDubboHelper
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.test.context.web.WebAppConfiguration
 import spock.lang.Specification
+
 /**
  *
  * @Date 2017/1/19
@@ -13,9 +12,7 @@ import spock.lang.Specification
  */
 @WebAppConfiguration
 @SpringBootTest
-public abstract class SpockSpringBaseTest extends Specification {
-    @Autowired
-    protected ConfigurableApplicationContext context;
+abstract class SpockSpringBaseTest extends Specification {
 
     /**
      * 生成 rpc接口调用mock

@@ -1,13 +1,9 @@
 buildscript {
     ext {
         springBootVersion = '1.4.3.RELEASE'
-        spring_version = "4.2.7.RELEASE"
-        jackson_version = "2.6.5"
-        zkclient_version = "0.1"
     }
     repositories {
         mavenLocal()
-        maven { url "http://115.159.125.225:8081/nexus/content/groups/public" }
         mavenCentral()
         jcenter()
         maven { url "http://repo.spring.io/release" }
@@ -27,11 +23,13 @@ buildscript {
 
 group = 'dobbo-mock'
 version = '1.0'
-description = "畅移java boot框架"
+description = "dubbo 单元测试 mock 库"
 
 allprojects {
+
     // 添加全部工程配置在这里
     apply plugin: 'java'
+    apply plugin: 'maven'
 
     sourceCompatibility = 1.8
 
@@ -39,10 +37,17 @@ allprojects {
 
     repositories {
         mavenLocal()
-        maven { url "http://115.159.125.225:8081/nexus/content/groups/public" }
         mavenCentral()
         jcenter()
         maven { url "http://repo.spring.io/release" }
+    }
+
+    ext {
+        dubbo_version = "2.5.3"
+        junit_version = "4.12"
+        spring_version = "4.3.5.RELEASE"
+        zookeeper_version = "3.4.6"
+        zkclient_version = "0.1"
     }
 }
 
@@ -52,23 +57,3 @@ subprojects {
     apply from: "$rootDir/gradle/sonar.gradle"
 }
 
-/////////////////  共有方法定义   //////////////////////
-/**
- * 加载db配置文件
- * @return
- */
-def loadProperties(propFileList) {
-    Properties p = new Properties()
-    propFileList.each { String file ->
-        def temp = new Properties()
-        new File(file).withInputStream { stream ->
-            temp.load(stream)
-            temp.propertyNames().each { String K ->
-                p.setProperty(K, temp.getProperty(K));
-            }
-        }
-    }
-
-
-    return p
-}
